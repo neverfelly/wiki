@@ -79,7 +79,7 @@ theme: Wikitten
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/neverfelly/blog
+  repo: https://github.com/neverfelly/wiki
   branch: gh-pages
   message: "Update blog"
 
