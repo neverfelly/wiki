@@ -4,12 +4,16 @@ node_js:
 dist: trusty
 sudo: required
 
+branches:
+    only:
+    - master
+
+install:
+    - source travis_env_init.sh
+
 script:
-  -  npm  install
-  -  hexo  cl
+  -  hexo clean
+  -  hexo g
 
 after_success:
-  -  git  config  --global  user.name  "neverfelly" 
-  -  git  config  --global  user.email  "neverfelly@gmail.com"
-  -  sed  -i''  "/^ *repo/s~github\.com~${GH_TOKEN}@github.com~"  _config.yml
-  -  hexo  deploy  -g
+  -  hexo  deploy > /dev/null
