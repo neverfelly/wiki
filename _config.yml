@@ -78,7 +78,10 @@ theme: Wikitten
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/neverfelly/blog
+  branch: gh-pages
+  message: "Update blog"
 
 math:
     enable: true
