@@ -25,8 +25,8 @@ npm install
 echo "hexo and packages install complete."
 
 # Set git config 
-git config --global user.name "${neverfelly}"
-git config --global user.email "${neverfelly@gmail.com}"
+git config --global user.name "neverfelly"
+git config --global user.email "neverfelly@gmail.com"
 sed -i'' "s~git@github.com:~https://${GH_TOKEN}@github.com/~" _config.yml
 
 theme_config_file="themes/Wikitten/_config.yml"
