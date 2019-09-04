@@ -27,7 +27,7 @@ echo "hexo and packages install complete."
 # Set git config 
 git config --global user.name "neverfelly"
 git config --global user.email "neverfelly@gmail.com"
-sed -i'' "s~git@github.com:~https://${GH_TOKEN}@github.com/~" _config.yml
+sed  -i''  "/^ *repo/s~github\.com~${GH_TOKEN}@github.com~"  _config.yml
 
 theme_config_file="themes/Wikitten/_config.yml"
 cp "${theme_config_file}.example" "${theme_config_file}"
