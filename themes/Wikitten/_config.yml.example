@@ -59,7 +59,7 @@ search:
 # History version 
 history_control: # make you wiki has history version control in page
     enable: true
-    server_link: https://github.com # recommend use GitHub https://github.com
+    server_link: https://www.github.com/neverfelly/wiki # recommend use GitHub https://github.com
     user: neverfelly
     repertory: wiki
     branch: master
