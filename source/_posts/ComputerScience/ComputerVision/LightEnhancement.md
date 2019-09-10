@@ -31,6 +31,16 @@ tags: [DeepLearning, Visions]
 - Loss: $$\mathcal{L}=\mathcal{L_{recon}}+\mathcal{L_s}, \mathcal{L_{recon}}=||R_{low}\circ \hat{I}-S_{normal}||_1$$ 
 - Denoising operated on reflectance
 
+### Learning to see in the dark
+
+- See-in-the-Dark (SID) dataset contains low-light images with paired ground truth.
+- what's on: video capture, denosing, complexity compared to burst image pipeline(graphics TOG 16')
+- Adopt pure FCN: based on recent works that pure FCN can effectively represent many image processing algorithms.
+- process sensor data directly
+- Context aggregation network and U-Net, not resnet
+- Metrics: A/B tests with amazon workers , PSNR/SSIM in controlled experiments for image quality
+- Loss, network architecture and data arrangement are tested in controlled experiments: shown that default pipeline outperforme than others
+
 # References
 
 - Guo, Xiaojie. 《LIME: A Method for Low-light IMage Enhancement》. *arXiv:1605.05034 [cs]*, 2016年5月17日. http://arxiv.org/abs/1605.05034.
