@@ -41,6 +41,38 @@ tags: [DeepLearning, Visions]
 - Metrics: A/B tests with amazon workers , PSNR/SSIM in controlled experiments for image quality
 - Loss, network architecture and data arrangement are tested in controlled experiments: shown that default pipeline outperforme than others
 
+### Kindling the Darkness: A Practical Low-light image enhancer(KinD)
+
+- Three challenges in low-light image enhancement:
+
+  - Estimate the illumination component from a single image and adjust light levels
+  - Remove degradations after light up dark regions
+  - Train a model without well-defined ground-truth light conditions
+
+- Contributions: 
+
+  - trained with paired images captured under different light/exposure conditions, instead of using any ground-truth reflectance and illumination information.
+  - flexibly adjust light levels
+  - a module for denosing
+  - State-of-the-art
+
+- Layer decomposition: 
+
+  - learn a mapping function from real data for light level adjustment
+  - mutual consistency(edge in $\mathbf{I}$, the penalty on $\mathbf{L}$ is small, for a location in a flat, the penalty turns to be large, so it's edge awared ): $$\mathcal{L_{mc}}=||\mathbf{M}\circ \exp(-c \cdot \mathbf{M})||_1，\mathbf{M}=|\nabla\mathbf{L}_l|+|\nabla \mathbf{L}_h|$$
+
+- Reflectance restoration
+
+  $$\mathcal{L}=||\hat{\mathbf{R}}-\mathbf{R}||_2^2-\text{SSIM}(\hat{\mathbf{R}},\mathbf{R_h})+||\nabla\mathbf{\hat{R}}-\nabla\mathbf{R}_h||_2^2$$
+
+  (question: why can do it? how about previous equation $$\mathbf{I}=\mathbf{R\circ I}+\mathbf{\hat{E}\circ I}$$)
+
+- Illumination adjustment
+
+  Two paramaters for adjustment $\alpha=\mathbf{L_t\over L_s}$,$\gamma=\mathbf{||\log{\hat{L}}||_1\over||\log{L_s}||_1}$ for gamma correction
+
+- Metrics: PSNR,SSIM,LOE,NIQE
+
 # References
 
 - Guo, Xiaojie. 《LIME: A Method for Low-light IMage Enhancement》. *arXiv:1605.05034 [cs]*, 2016年5月17日. http://arxiv.org/abs/1605.05034.
