@@ -6,7 +6,10 @@ tags: [DeepLearning, Visions]
 ---
 # Methods
 
-## Retinex
+
+## Traditional
+
+### Retinex
 
 - tranditional vision
 - Based on equation $S(x, y)=R(x,y)L(x,y)$
@@ -17,6 +20,20 @@ tags: [DeepLearning, Visions]
   
   - LIME：1.Initial Illumination map estimation $$\textbf{L}={\textbf{S}-1+a\over 1-{1\over a}+\max_{c}{\textbf{S}^c \over a}+\epsilon} + (1-a)$$  2. Illumination map refinement  $$ \min _{\mathbf{T}}\|\hat{\mathbf{T}}-\mathbf{T}\|_{F}^{2}+\alpha \sum_{x} \frac{\mathbf{W}_{h}(x)\left(\nabla_{h} \mathbf{T}(x)\right)^{2}}{\left|\nabla_{h} \hat{\mathbf{T}}(x)\right|+\epsilon}+\frac{\mathbf{W}_{v}(x)\left(\nabla_{v} \mathbf{T}(x)\right)^{2}}{\left|\nabla_{v} \hat{\mathbf{T}}(x)\right|+\epsilon} $$ conclusion: best traditional method
 - Retinex based methods suffer from the limitation in model capacity of the decomposition for reflectance and illumination
+
+### Gradient based
+
+- Advantage : simultaneously apply the gradient-based filtering.
+
+- $$q_h(\boldsymbol{x})=f_h(\boldsymbol{x})\cdot L(f(x);\beta, \tau)$$
+
+  $$L(\xi; \beta, \tau)=\begin{cases} {\beta -1\over 2\tau^2}\xi^2-{\beta-1\over\tau}\xi+\beta & (\xi \le \tau) \\ 1 & (\xi>\tau)\end{cases}$$ 
+
+  $f(\boldsymbol{x})$ and $\xi$ denote pixel intensity, $L$ is enhancement function, $q$ denote enhanced pixel
+
+- could do optional gradient filtering
+
+- don't know how to code
 
 ## DeepMethods
 
