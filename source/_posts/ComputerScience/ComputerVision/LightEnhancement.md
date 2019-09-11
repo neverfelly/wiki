@@ -69,7 +69,7 @@ tags: [DeepLearning, Visions]
 
 - Illumination adjustment
 
-  Two paramaters for adjustment $\alpha=\mathbf{L_t\over L_s}$,$\gamma=\mathbf{||\log{\hat{L}}||_1\over||\log{L_s}||_1}$ for gamma correction
+  Two paramaters for adjustment $\alpha=\mathbf{L_t\over L_s}$,$\gamma=\mathbf{||\log{\hat{L}}||_1\over||\log{L_s}||_1}$ for gamma correction(How to use)
 
 - Metrics: PSNR,SSIM,LOE,NIQE
 
@@ -92,6 +92,70 @@ tags: [DeepLearning, Visions]
   Composite loss: $$\mathcal{L_{com}}=\alpha \mathcal{L_{enh}}+(1-\alpha)\mathcal{L}_{ssim\_ms},\mathcal{L_{enh}}=\mathcal{L_{L_{1}}}(y,R_x\cdot I_x^{'})$$  smooth loss and SSIM to keep structure consistency
   
 - Datasets: CSID, converted from see in the dark(SID) dataset
+
+### EnlightenGAN
+
+- without paired supervison
+
+- Global-local discriminator
+
+  Enhance local regions with randomly croped patches
+
+  global loss: LSGAN loss
+
+- Self feature preserving loss
+
+  Preserve the image content features
+
+  $$\mathcal{L}_{SFP}(I^L)={1\over W_{i,j}H_{i,j}}\sum_{x=1}^{W_{i,j}}\sum_{y=1}^{H_{i,j}}(\phi_{i,j}(I^L)-\phi_{i,j}(G(I^L)))^2$$ , $i$ for max pooling, $j$ for convolutional layer after max pooling
+
+  local discriminator patches also need to be regularized.
+
+- attention : enhance dart region more effectively
+
+  Question: self labeled attention map?
+
+- Metrics: NIQE
+
+### Attention-guided low-light image enhancement
+
+- solve the denosing and low-light enhancement simultaneously
+
+- Datasets: propose a low-light image simulation pipeline to synthesize realistic low-light images
+
+- Attention-net: estimate the illumination to guide the attention
+
+  U-Net, retinex-based solution faces difficulties in handling black regions, ue-attention map could solve it.
+
+- Ehancement-net
+
+  decompose original problem into serveral sub-problems(noise removal, texture preserving, color correction)
+
+  Five different network architectures(why???)
+
+- Reinforce-net: improve contrast and details
+
+- Loss: attention: L2. Noise: L1
+
+  Enhancement:
+
+  bright loss: $$\mathcal{L_{eb}}=||\mathcal{S}(\mathcal{F_e}(I, A', N')-\tilde{I})||^1, \mathcal{S}=\begin{cases} -\lambda x & x <0 \\x&x\ge 0 \end{cases}$$ , ensure sufficient brightness.
+
+  structural loss: SSIM
+
+  perceptual loss
+
+  region loss: balances the degree of enhancement for different regions:$$\mathcal{L_{er}}=||I'\cdot A'-\tilde{I}\cdot A'||^1+1-\text{ssim}(I'\cdot A',\tilde{I}\cdot A')$$
+
+  $A'$ Is the predicted ue-attention map, $N'$for noise map
+
+  Reinforce:
+
+  bright loss+structural loss + perceptual loss
+
+- Metrics: PSNR, SSIM, AB, VIF, LOE, TMQI, LPIPS
+
+- further: blocking artifacts, black regions without any texture, extremely strong noise
 
 # References
 
