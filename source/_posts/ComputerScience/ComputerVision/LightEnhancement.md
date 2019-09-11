@@ -13,7 +13,7 @@ tags: [DeepLearning, Visions]
 
 - tranditional vision
 - Based on equation $S(x, y)=R(x,y)L(x,y)$
-- $r(x,y)=\log S(x,y)-\log F(x,y)\cdot S(x,y)$ ,$\cdot$denote convolution，$F(x,y)=\lambda e^{-(x^2+y^2)\over c^2}$, which must statisify $\int \int F(x,y)dxdy=1$
+- $r(x,y)=\log S(x,y)-\log [F(x,y)\ast S(x,y)]$ ,$\ast$ denote convolution，$F(x,y)=\lambda e^{-(x^2+y^2)\over c^2}$, which must statisify $\int \int F(x,y)dxdy=1$
 - - SSR 算法流程：![image-20190905214238128](./ssr.png)
   
   - MSR:$r(x,y)=\sum_{k}w_k(\log S(x,y)-\log F_k(x,y)\cdot S(x,y))$ 
@@ -37,10 +37,24 @@ tags: [DeepLearning, Visions]
 
 ## DeepMethods
 
+### MRS-net
+
+- Use neural network to process MSR theory, avoid to artificially setting parameters.
+
+- Multi-scale retinex is a feedforward CNN with different kernels
+
+  For reduction:
+
+  $$r_{MSR_i}(x,y)=\log I_i(x,y)-{1\over 3}\log I_i(x,y)\ast [\sum_{n=1}^{3}K_n e^{-{x^2+y^2\over2c_n^2}}]$$
+
+  Last summation shows that it aims to summarize guassian functions with variance $c_1,c_2,c_3$. And we know that convolution of two gaussian functions is still a gaussian function, so we can reformat it to a cascading structure with three gaussian function convolotion $c_1,c_2-c_1,c_3-c_2$, and concate each level  at last.
+
+- Three components: multi=scale loogarithmic transformation: use logarithmic transformation to perform origin image, $n$ procssed images to concate and put into a convolutional layer; difference-of-convolution;color restoration function.
+
+- Loss: frobenius norm
+
 ### Retinex-Net
 
-- deep learning based
-- end-to-end
 - Three stages: decomposition, enhancement, reconstruction
 - decomposition: Data driven by nerual network， input: paired normal light and low light, key: low-light image and normal-light image share the same reflectance. 
 - loss: $$\mathcal{L}=\mathcal{L_{recon}}+\mathcal{\lambda_{r}L_r}+\lambda_{s}\mathcal{L_s}$$, $$\mathcal{L_{recon}}=\sum_i\sum_j\lambda_{ij}\vert\vert R_i \circ I_j-S_j\vert\vert_1, i \in （low,normal), j \in (low,normal)$$, $$\mathcal{L_r}=||R_{low}-R_{normal}||_1$$ , **novel ** improved structure-blinding TV loss(Total variation minimizati) to Structure-Aware Smoothness Loss $$\mathcal{L_s}=\sum_i||\nabla I_i \circ \exp (-\lambda_g \nabla R_i))||$$ , compared with LIME: LIME is weighted by an inital illumination map estimation, rather it is weighted by reflectance.
