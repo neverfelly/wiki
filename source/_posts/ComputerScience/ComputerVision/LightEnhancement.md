@@ -73,6 +73,26 @@ tags: [DeepLearning, Visions]
 
 - Metrics: PSNR,SSIM,LOE,NIQE
 
+### Low-light image enhancement algorithm based on retinex and generative adversarial network(Retinex-GAN)
+
+- loss
+
+  Regular loss: $$\mathcal{L_{reg}}={1\over mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}{1\over C-f(R(i,j))}$$, prevent the illumination image from approaching 1 or -1 to avoid that the network falls into a local optimal solution.
+
+  multi-task loss: $$\mathcal{L}=\lambda_{rec}\mathcal{L_{rec}}+\lambda_{dec}\mathcal{L_{dec}}+\lambda_{com}\mathcal{L_{com}}+\lambda_{cGAN}\mathcal{L_{cGAN}}$$ 
+
+  Smooth L1 loss: $$ \mathcal{L_{L_1}}=smooth_{\mathcal{L_1}}(x)=\begin{cases} 0.5x^2 & if \quad x < 1 \\ x-0.5 & otherwise \end{cases} $$
+  
+  reconstruction loss: $$\mathcal{L_{rec}}=\mathcal{L_{rec_x}}+\mathcal{L_{rec_y}}+\mathcal{L_{reg}}$$
+  
+  decomposition loss: $$\mathcal{L_{dec}}=\mathcal{L_{L_1}}(I_x,I_y)$$ make the image in different brightness is decomposed to the same illumination images.
+  
+  SSIM-MS loss: obtain the image details
+  
+  Composite loss: $$\mathcal{L_{com}}=\alpha \mathcal{L_{enh}}+(1-\alpha)\mathcal{L}_{ssim\_ms},\mathcal{L_{enh}}=\mathcal{L_{L_{1}}}(y,R_x\cdot I_x^{'})$$  smooth loss and SSIM to keep structure consistency
+  
+- Datasets: CSID, converted from see in the dark(SID) dataset
+
 # References
 
 - Guo, Xiaojie. 《LIME: A Method for Low-light IMage Enhancement》. *arXiv:1605.05034 [cs]*, 2016年5月17日. http://arxiv.org/abs/1605.05034.
